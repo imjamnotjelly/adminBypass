@@ -43,19 +43,9 @@ def main():
             print("Please enter a valid executable.")
     else:
         executable = executables[0]  # automatically selects the only executable if only one is present
-
-    # creates temporary batch file
-    with open(f"bypass.bat", "w") as f:
-        f.write(
-            f"""
-        set __COMPAT_LAYER=RunAsInvoker
-        start {executable[:-4]}
-        """)
-
-    # executes and deletes aforementioned batch file
-    subprocess.call(["bypass.bat"])
-    os.remove("bypass.bat")
-
+        
+        # runs shell exploit
+        subprocess.run(f"set __COMPAT_LAYER=RunAsInvoker && start {executable[:-4]}", shell=True)
 
 if __name__ == "__main__":
     main()
